@@ -1,0 +1,244 @@
+package Kofi_Co;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+import javax.swing.text.*;
+
+public class CARD_Page {
+
+    public JFrame frmCardPage;
+    private JTextField creditField;
+    private JTextField expiryField;
+    private JTextField cvvField;
+
+    private JTextField activeField;
+    private int activeFieldType;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                CARD_Page window = new CARD_Page();
+                window.frmCardPage.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public CARD_Page() {
+        initialize();
+    }
+
+    private void initialize() {
+        frmCardPage = new JFrame("CARD page");
+        frmCardPage.setTitle("CARD page");
+        frmCardPage.setBounds(100, 100, 700, 775);
+        frmCardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmCardPage.getContentPane().setLayout(null);
+        frmCardPage.getContentPane().setBackground(Color.WHITE);
+        frmCardPage.setResizable(false);
+
+        // "< BACK" button
+        JButton backButton = new JButton("< BACK");
+        backButton.setHorizontalAlignment(SwingConstants.LEFT);
+        backButton.setBounds(00, 0, 700, 60);
+        backButton.setFocusPainted(false);
+        backButton.setFocusable(false);
+        backButton.setFont(new Font("Poppins Regular", Font.PLAIN, 20));
+        backButton.setBackground(Color.WHITE);
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frmCardPage.dispose();
+                new Credit_Selection1().frame.setVisible(true);
+            }
+        });
+        frmCardPage.getContentPane().add(backButton);
+
+        // K. CO LOGO
+        JLabel K_Co = new JLabel("K. Co");
+        K_Co.setForeground(new Color(0x5e3219));
+        K_Co.setFont(new Font("Gugi", Font.BOLD, 140));
+        K_Co.setBounds(156, 60, 372, 170);
+        frmCardPage.getContentPane().add(K_Co);
+
+        // Debit/Credit Card Label
+        JLabel Text = new JLabel("Debit/Credit Card");
+        Text.setForeground(new Color(0x5e3219));
+        Text.setFont(new Font("Ariel", Font.BOLD, 20));
+        Text.setBounds(10, 241, 170, 50);
+        frmCardPage.getContentPane().add(Text);
+        
+        
+        JLabel Text1 = new JLabel("  ——————or using your debit / credit card or wallet———————");
+        Text1.setForeground(new Color(0x5e3219));
+        Text1.setFont(new Font("Ariel", Font.BOLD, 20));
+        Text1.setBounds(0, 180, 684, 50);
+        frmCardPage.getContentPane().add(Text1);
+
+        // Card Number
+        creditField = new JTextField();
+        creditField.setFont(new Font("Arial", Font.PLAIN, 28));
+        creditField.setBounds(120, 326, 445, 70);
+        creditField.setHorizontalAlignment(JTextField.CENTER);
+        creditField.setEditable(false);
+        creditField.setFocusable(false);
+        creditField.setOpaque(true);
+        creditField.setBackground(Color.LIGHT_GRAY);/////////////////////
+        creditField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        frmCardPage.getContentPane().add(creditField);
+
+        // Expiry Date
+        JLabel expiryLabel = new JLabel("Expiry (MM/YY):");
+        expiryLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        expiryLabel.setBounds(120, 412, 150, 30);
+        frmCardPage.getContentPane().add(expiryLabel);
+
+        expiryField = new JTextField();
+        expiryField.setFont(new Font("Arial", Font.PLAIN, 20));
+        expiryField.setBounds(269, 411, 100, 30);
+        expiryField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
+        expiryField.setBackground(Color.LIGHT_GRAY);////////////////////////
+        expiryField.setOpaque(true);
+        frmCardPage.getContentPane().add(expiryField);
+        ((AbstractDocument) expiryField.getDocument()).setDocumentFilter(new DigitFilter(4, true));
+
+        // CVV 
+        JLabel cvvLabel = new JLabel("CVV:");
+        cvvLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        cvvLabel.setBounds(415, 412, 50, 30);
+        frmCardPage.getContentPane().add(cvvLabel);
+
+        cvvField = new JTextField();
+        cvvField.setFont(new Font("Arial", Font.PLAIN, 20));
+        cvvField.setBounds(465, 412, 100, 30);
+        cvvField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
+        cvvField.setBackground(Color.LIGHT_GRAY);////////////////////////
+        cvvField.setOpaque(true);
+        frmCardPage.getContentPane().add(cvvField);
+        ((AbstractDocument) cvvField.getDocument()).setDocumentFilter(new DigitFilter(3, false));
+
+        // Keypad pane
+        JPanel padPanel = new JPanel();
+        padPanel.setLayout(new GridLayout(4, 3, 10, 10));
+        padPanel.setBounds(27, 464, 630, 200);
+        padPanel.setBackground(Color.WHITE);
+        frmCardPage.getContentPane().add(padPanel);
+
+        String[] buttons = {
+            "1", "2", "3",
+            "4", "5", "6",
+            "7", "8", "9",
+            "C", "0", "←"
+        };
+
+        for (String label : buttons) {
+            JButton btn = new JButton(label);
+            btn.setFont(new Font("Arial", Font.BOLD, 22));
+            btn.setFocusPainted(false);
+            btn.setBackground(new Color(220, 220, 220));
+            btn.addActionListener(e -> handleInput(label));
+            padPanel.add(btn);
+        }
+
+        //Confirm Button
+        RoundedButton confirmButton = new RoundedButton("Confirm");
+        confirmButton.setFont(new Font("Arial", Font.BOLD, 20));
+        confirmButton.setBounds(237, 675, 200, 50);
+        confirmButton.setBackground(new Color(94, 50, 25));
+        confirmButton.setForeground(Color.WHITE);
+        frmCardPage.getContentPane().add(confirmButton);
+
+
+        activeField = creditField;
+        activeFieldType = 0;
+    }
+
+    private void handleInput(String input) {
+        String current = activeField.getText().replaceAll(" ", "");
+
+        switch (input) {
+            case "C":
+
+                activeField.setText("");
+                break;
+            case "←":
+
+                if (!current.isEmpty()) {
+                    current = current.substring(0, current.length() - 1);
+                    activeField.setText(formatWithSpaces(current));
+                }
+                break;
+            default:
+
+                int maxLength = (activeFieldType == 0) ? 16 : (activeFieldType == 1) ? 5 : 3;
+
+                if (current.length() < maxLength) {
+                    current += input;
+                    activeField.setText(formatWithSpaces(current));
+                }
+                break;
+        }
+    }
+
+    private String formatWithSpaces(String digitsOnly) {
+        StringBuilder formatted = new StringBuilder();
+        
+
+        if (activeFieldType == 0) {
+            for (int i = 0; i < digitsOnly.length(); i++) {
+                if (i > 0 && i % 4 == 0) formatted.append(" ");
+                formatted.append(digitsOnly.charAt(i));
+            }
+        }
+
+        
+        else if (activeFieldType == 1) {
+            for (int i = 0; i < digitsOnly.length(); i++) {
+                if (i == 2) formatted.append("/");
+                formatted.append(digitsOnly.charAt(i));
+            }
+        } else {
+            formatted.append(digitsOnly);
+        }
+
+        return formatted.toString();
+    }
+
+
+    class DigitFilter extends DocumentFilter {
+        private int maxLength;
+        private boolean autoSlash;
+
+        public DigitFilter(int maxLength, boolean autoSlash) {
+            this.maxLength = maxLength;
+            this.autoSlash = autoSlash;
+        }
+
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            replace(fb, offset, 0, string, attr);
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            Document doc = fb.getDocument();
+            String currentText = doc.getText(0, doc.getLength()).replaceAll("/", "");
+            String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+
+            if (newText.length() > maxLength || !newText.matches("\\d*")) return;
+
+            if (autoSlash && newText.length() >= 4) {
+                newText = newText.substring(0, 2) + "/" + newText.substring(2);
+            }
+
+            fb.remove(0, doc.getLength());
+            fb.insertString(0, newText, attrs);
+        }
+    }
+}
