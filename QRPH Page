@@ -1,0 +1,73 @@
+package Kofi_Co;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+
+import javax.swing.*;
+
+public class QRPH_Page {
+
+    public JFrame frame;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                QRPH_Page window = new QRPH_Page();
+                window.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public QRPH_Page() {
+        initialize();
+    }
+
+    private void initialize() {
+        frame = new JFrame("QRPH Page");
+        frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 20));
+        frame.setBounds(100, 100, 700, 775);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+        frame.getContentPane().setBackground(Color.WHITE);
+        frame.setResizable(false);
+
+        
+        // BACK BUTTON
+        JButton backButton = new JButton("< BACK");
+        backButton.setHorizontalAlignment(SwingConstants.LEFT);
+        backButton.setBounds(0, 0, 700, 60);
+        backButton.setFocusPainted(false);
+        backButton.setFocusable(false);
+        backButton.setFont(new Font("Poppins Regular", Font.PLAIN, 20));
+        backButton.setBackground(Color.WHITE);
+        backButton.setBorderPainted(false);
+        backButton.setContentAreaFilled(false);
+        backButton.addActionListener(e -> {
+            frame.dispose();
+            new Credit_Selection1().frame.setVisible(true);
+        });
+        frame.getContentPane().add(backButton);
+
+
+        //QRPH image
+        ImageIcon QRPH1 = new ImageIcon("C:\\Users\\mikoo\\Desktop\\QRPH.png");
+        Image scaledImage = QRPH1.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+
+        JLabel QRPH = new JLabel(resizedIcon);
+        QRPH.setBounds(192, 260, 300, 300);
+        frame.getContentPane().add(QRPH);
+        
+        
+        //text
+        JLabel K_Co3 = new JLabel("K. Co");
+        K_Co3.setForeground(new Color(0x5e3219));
+        K_Co3.setFont(new Font("Gugi", Font.BOLD, 140));
+        K_Co3.setBounds(155, 120, 400, 170);
+        frame.getContentPane().add(K_Co3);
+    }
+}
