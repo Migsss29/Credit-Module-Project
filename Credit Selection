@@ -1,0 +1,94 @@
+package Kofi_Co;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+public class Credit_Selection1 {
+
+    public JFrame frame;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                Credit_Selection1 window = new Credit_Selection1();
+                window.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public Credit_Selection1() {
+        initialize();
+    }
+    
+    
+    //BACKGROUND
+    private void initialize() {
+        frame = new JFrame();
+        frame.getContentPane().setEnabled(false);
+        frame.getContentPane().setBackground(new Color(0xFFFFFF));
+        frame.setBounds(100, 100, 700, 775);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
+        frame.setResizable(false);
+
+        
+        //BACK BUTTON
+        JButton backbutton = new JButton("   < BACK");
+        backbutton.setHorizontalAlignment(SwingConstants.LEFT);
+        backbutton.setFocusable(false);
+        backbutton.setFocusTraversalKeysEnabled(false);
+        backbutton.setFocusPainted(false);
+        backbutton.setBorderPainted(false);
+        backbutton.setFont(new Font("Poppins Regular", Font.PLAIN, 20));
+        backbutton.setBorder(null);
+        backbutton.setBackground(new Color(255, 255, 255));
+        backbutton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backbutton.setBounds(0, 0, 700, 60);
+        frame.getContentPane().add(backbutton);
+
+        
+        //K. CO LOGO
+        JLabel K_Co = new JLabel("K. Co");
+        K_Co.setForeground(new Color(0x5e3219));
+        K_Co.setFont(new Font("Gugi", Font.BOLD, 140));
+        K_Co.setBounds(142, 120, 400, 170);
+        frame.getContentPane().add(K_Co);
+
+        
+        //SELECT CREDIT OPTION LABEL
+        JLabel Select_Credit_Option = new JLabel("Select Credit Option");
+        Select_Credit_Option.setForeground(Color.BLACK);
+        Select_Credit_Option.setFont(new Font("Arial", Font.BOLD, 45));
+        Select_Credit_Option.setBounds(126, 240, 431, 49);
+        frame.getContentPane().add(Select_Credit_Option);
+
+        
+        // QRPH BUTTON
+        RoundedButton QRPHButton = new RoundedButton("<html><center>QR<br>PH</center></html>");
+        QRPHButton.setBounds(101, 382, 230, 251);
+        QRPHButton.addActionListener(e -> {
+            frame.dispose();
+            new QRPH_Page().frame.setVisible(true);
+        });
+        frame.getContentPane().add(QRPHButton);
+
+        
+        // CREDIT / DEBIT CARD BUTTON
+        RoundedButton CARDBtn = new RoundedButton("<html><center>CREDIT<br>DEBIT<br>CARD</center></html>");
+        CARDBtn.setBounds(353, 382, 230, 251);
+        CARDBtn.addActionListener(e -> {
+            frame.dispose();
+            new CARD_Page().frmCardPage.setVisible(true);
+        });
+        frame.getContentPane().add(CARDBtn);
+    }
+}
