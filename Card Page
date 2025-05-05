@@ -31,32 +31,7 @@ public class CARD_Page {
         initialize();
     }
 
-    private void initialize() {
-        frmCardPage = new JFrame("CARD page");
-        frmCardPage.setTitle("CARD page");
-        frmCardPage.setBounds(100, 100, 700, 775);
-        frmCardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frmCardPage.getContentPane().setLayout(null);
-        frmCardPage.getContentPane().setBackground(Color.WHITE);
-        frmCardPage.setResizable(false);
 
-        // "< BACK" button
-        JButton backButton = new JButton("< BACK");
-        backButton.setHorizontalAlignment(SwingConstants.LEFT);
-        backButton.setBounds(00, 0, 700, 60);
-        backButton.setFocusPainted(false);
-        backButton.setFocusable(false);
-        backButton.setFont(new Font("Poppins Regular", Font.PLAIN, 20));
-        backButton.setBackground(Color.WHITE);
-        backButton.setBorderPainted(false);
-        backButton.setContentAreaFilled(false);
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frmCardPage.dispose();
-                new Credit_Selection1().frame.setVisible(true);
-            }
-        });
-        frmCardPage.getContentPane().add(backButton);
 
         // K. CO LOGO
         JLabel K_Co = new JLabel("K. Co");
