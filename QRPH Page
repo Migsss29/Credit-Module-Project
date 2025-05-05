@@ -26,15 +26,6 @@ public class QRPH_Page {
         initialize();
     }
 
-    private void initialize() {
-        frame = new JFrame("QRPH Page");
-        frame.getContentPane().setFont(new Font("Arial", Font.PLAIN, 20));
-        frame.setBounds(100, 100, 700, 775);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-        frame.getContentPane().setBackground(Color.WHITE);
-        frame.setResizable(false);
-
         
         // BACK BUTTON
         JButton backButton = new JButton("< BACK");
