@@ -29,17 +29,6 @@ public class Credit_Selection1 {
         initialize();
     }
     
-    
-    //BACKGROUND
-    private void initialize() {
-        frame = new JFrame();
-        frame.getContentPane().setEnabled(false);
-        frame.getContentPane().setBackground(new Color(0xFFFFFF));
-        frame.setBounds(100, 100, 700, 775);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
-        frame.setResizable(false);
-
         
         //BACK BUTTON
         JButton backbutton = new JButton("   < BACK");
