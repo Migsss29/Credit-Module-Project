@@ -6,50 +6,51 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class CARD_Page {
-    public JFrame frmCardPage;
-    public JTextField creditField, expiryField, cvvField;
-    public JTextField activeField;
-    public int activeFieldType;
 
-    public void createCardPage(JPanel mainPanel) {
-        frmCardPage = new JFrame("Card Page");
-        frmCardPage.setBounds(100, 100, 700, 800);
-        frmCardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frmCardPage.getContentPane().setLayout(null);
-        frmCardPage.getContentPane().add(mainPanel); // Add the main panel
+    public JFrame frmCardPage = new JFrame();
+    private JTextField creditField = new JTextField();
+    private JTextField expiryField = new JTextField();
+    private JTextField cvvField = new JTextField();
 
-        addComponentsToPanel(mainPanel);
+    private JTextField activeField = creditField;
+    private int activeFieldType = 0;
 
+    public CARD_Page() {
+        initialize();
+    }
+
+    public void showCardPage() {
         frmCardPage.setVisible(true);
     }
 
-    private void addComponentsToPanel(JPanel mainPanel) {
+    private void initialize() {
+        frmCardPage.setTitle("Card Page");
+        frmCardPage.setBounds(100, 100, 700, 800);
+        frmCardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setBackground(Color.WHITE);
+        frmCardPage.setContentPane(mainPanel);
 
-        // K. Co Label
-        JLabel K_Co = new JLabel("K. Co");
-        K_Co.setForeground(new Color(0x5e3219));
-        K_Co.setFont(new Font("Gugi", Font.BOLD, 140));
-        K_Co.setBounds(156, 60, 372, 170);
-        mainPanel.add(K_Co);
+        JLabel title = new JLabel("K. Co");
+        title.setForeground(new Color(0x5e3219));
+        title.setFont(new Font("Gugi", Font.BOLD, 140));
+        title.setBounds(156, 60, 372, 170);
+        mainPanel.add(title);
 
-        // Debit/Credit Card Label
-        JLabel Text = new JLabel("Debit/Credit Card");
-        Text.setForeground(new Color(0x5e3219));
-        Text.setFont(new Font("Ariel", Font.BOLD, 20));
-        Text.setBounds(10, 241, 170, 50);
-        mainPanel.add(Text);
+        JLabel subtitle = new JLabel("  ——————or using your debit / credit card or wallet———————");
+        subtitle.setForeground(new Color(0x5e3219));
+        subtitle.setFont(new Font("Ariel", Font.BOLD, 20));
+        subtitle.setBounds(0, 180, 684, 50);
+        mainPanel.add(subtitle);
 
-        // Divider Label
-        JLabel Text1 = new JLabel("  ——————or using your debit / credit card or wallet———————");
-        Text1.setForeground(new Color(0x5e3219));
-        Text1.setFont(new Font("Ariel", Font.BOLD, 20));
-        Text1.setBounds(0, 180, 684, 50);
-        mainPanel.add(Text1);
+        JLabel cardLabel = new JLabel("Debit/Credit Card");
+        cardLabel.setForeground(new Color(0x5e3219));
+        cardLabel.setFont(new Font("Ariel", Font.BOLD, 20));
+        cardLabel.setBounds(10, 241, 170, 50);
+        mainPanel.add(cardLabel);
 
-        // Credit Field
-        creditField = new JTextField();
         creditField.setFont(new Font("Arial", Font.PLAIN, 28));
         creditField.setBounds(120, 326, 445, 70);
         creditField.setHorizontalAlignment(JTextField.CENTER);
@@ -58,51 +59,46 @@ public class CARD_Page {
         creditField.setOpaque(true);
         creditField.setBackground(Color.LIGHT_GRAY);
         creditField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+            BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         mainPanel.add(creditField);
 
-        // Expiry Label and Field
         JLabel expiryLabel = new JLabel("Expiry (MM/YY):");
         expiryLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         expiryLabel.setBounds(120, 412, 150, 30);
         mainPanel.add(expiryLabel);
 
-        expiryField = new JTextField();
         expiryField.setFont(new Font("Arial", Font.PLAIN, 20));
         expiryField.setBounds(269, 411, 100, 30);
         expiryField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
         expiryField.setBackground(Color.LIGHT_GRAY);
         expiryField.setOpaque(true);
-        ((AbstractDocument) expiryField.getDocument()).setDocumentFilter(new DigitFilter(4, true));
         mainPanel.add(expiryField);
+        ((AbstractDocument) expiryField.getDocument()).setDocumentFilter(new DigitFilter(4, true));
 
-        // CVV Label and Field
         JLabel cvvLabel = new JLabel("CVV:");
         cvvLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         cvvLabel.setBounds(415, 412, 50, 30);
         mainPanel.add(cvvLabel);
 
-        cvvField = new JTextField();
         cvvField.setFont(new Font("Arial", Font.PLAIN, 20));
         cvvField.setBounds(465, 412, 100, 30);
         cvvField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
         cvvField.setBackground(Color.LIGHT_GRAY);
         cvvField.setOpaque(true);
-        ((AbstractDocument) cvvField.getDocument()).setDocumentFilter(new DigitFilter(3, false));
         mainPanel.add(cvvField);
+        ((AbstractDocument) cvvField.getDocument()).setDocumentFilter(new DigitFilter(3, false));
 
-        // Number Pad Panel
         JPanel padPanel = new JPanel(new GridLayout(4, 3, 10, 10));
         padPanel.setBounds(27, 464, 630, 200);
         padPanel.setBackground(Color.WHITE);
         mainPanel.add(padPanel);
 
         String[] buttons = {
-                "1", "2", "3",
-                "4", "5", "6",
-                "7", "8", "9",
-                "C", "0", "←"
+            "1", "2", "3",
+            "4", "5", "6",
+            "7", "8", "9",
+            "C", "0", "←"
         };
 
         for (String label : buttons) {
@@ -114,7 +110,6 @@ public class CARD_Page {
             padPanel.add(btn);
         }
 
-        // Confirm Button
         RoundedButton confirmButton = new RoundedButton("Confirm");
         confirmButton.setFont(new Font("Arial", Font.BOLD, 20));
         confirmButton.setBounds(237, 675, 200, 50);
@@ -124,7 +119,7 @@ public class CARD_Page {
     }
 
     private void handleInput(String input) {
-        String current = activeField.getText().replaceAll(" ", "");
+        String current = activeField.getText().replaceAll(" ", "").replaceAll("/", "");
 
         switch (input) {
             case "C":
@@ -148,6 +143,7 @@ public class CARD_Page {
 
     private String formatWithSpaces(String digitsOnly) {
         StringBuilder formatted = new StringBuilder();
+
         if (activeFieldType == 0) {
             for (int i = 0; i < digitsOnly.length(); i++) {
                 if (i > 0 && i % 4 == 0) formatted.append(" ");
@@ -161,12 +157,13 @@ public class CARD_Page {
         } else {
             formatted.append(digitsOnly);
         }
+
         return formatted.toString();
     }
 
     class DigitFilter extends DocumentFilter {
-        private final int maxLength;
-        private final boolean autoSlash;
+        private int maxLength;
+        private boolean autoSlash;
 
         public DigitFilter(int maxLength, boolean autoSlash) {
             this.maxLength = maxLength;
