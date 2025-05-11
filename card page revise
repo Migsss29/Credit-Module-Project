@@ -6,13 +6,9 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class CARD_Page {
-    public JFrame frmCardPage;
-    private JTextField creditField, expiryField, cvvField;
-    private JTextField activeField;
-    private int activeFieldType;
 
-    public CARD_Page() {
-        frmCardPage = new JFrame("Card Page");
+    public void createCardPage() {
+        JFrame frmCardPage = new JFrame("Card Page");
         frmCardPage.setBounds(100, 100, 700, 800);
         frmCardPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmCardPage.getContentPane().setLayout(null);
@@ -40,7 +36,7 @@ public class CARD_Page {
         Text1.setBounds(0, 180, 684, 50);
         mainPanel.add(Text1);
 
-        creditField = new JTextField();
+        JTextField creditField = new JTextField();
         creditField.setFont(new Font("Arial", Font.PLAIN, 28));
         creditField.setBounds(120, 326, 445, 70);
         creditField.setHorizontalAlignment(JTextField.CENTER);
@@ -59,7 +55,7 @@ public class CARD_Page {
         expiryLabel.setBounds(120, 412, 150, 30);
         mainPanel.add(expiryLabel);
 
-        expiryField = new JTextField();
+        JTextField expiryField = new JTextField();
         expiryField.setFont(new Font("Arial", Font.PLAIN, 20));
         expiryField.setBounds(269, 411, 100, 30);
         expiryField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
@@ -68,14 +64,13 @@ public class CARD_Page {
         ((AbstractDocument) expiryField.getDocument()).setDocumentFilter(new DigitFilter(4, true));
         mainPanel.add(expiryField);
 
-
         //cvv text
         JLabel cvvLabel = new JLabel("CVV:");
         cvvLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         cvvLabel.setBounds(415, 412, 50, 30);
         mainPanel.add(cvvLabel);
 
-        cvvField = new JTextField();
+        JTextField cvvField = new JTextField();
         cvvField.setFont(new Font("Arial", Font.PLAIN, 20));
         cvvField.setBounds(465, 412, 100, 30);
         cvvField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
@@ -83,7 +78,6 @@ public class CARD_Page {
         cvvField.setOpaque(true);
         ((AbstractDocument) cvvField.getDocument()).setDocumentFilter(new DigitFilter(3, false));
         mainPanel.add(cvvField);
-
 
         //number buttons
         JPanel padPanel = new JPanel(new GridLayout(4, 3, 10, 10));
@@ -103,7 +97,7 @@ public class CARD_Page {
             btn.setFont(new Font("Arial", Font.BOLD, 22));
             btn.setFocusPainted(false);
             btn.setBackground(new Color(220, 220, 220));
-            btn.addActionListener(e -> handleInput(label));
+            btn.addActionListener(e -> handleInput(label, creditField, expiryField, cvvField));
             padPanel.add(btn);
         }
 
@@ -114,15 +108,10 @@ public class CARD_Page {
         confirmButton.setForeground(Color.WHITE);
         mainPanel.add(confirmButton);
 
-        activeField = creditField;
-        activeFieldType = 0;
     }
 
-    public JFrame getFrame() {
-        return frmCardPage;
-    }
-
-    private void handleInput(String input) {
+    private void handleInput(String input, JTextField creditField, JTextField expiryField, JTextField cvvField) {
+        JTextField activeField = creditField; // You can change this to other fields if needed
         String current = activeField.getText().replaceAll(" ", "");
 
         switch (input) {
@@ -136,7 +125,7 @@ public class CARD_Page {
                 }
                 break;
             default:
-                int maxLength = (activeFieldType == 0) ? 16 : (activeFieldType == 1) ? 4 : 3;
+                int maxLength = (activeField == creditField) ? 16 : (activeField == expiryField) ? 4 : 3;
                 if (current.length() < maxLength) {
                     current += input;
                     activeField.setText(formatWithSpaces(current));
@@ -147,19 +136,7 @@ public class CARD_Page {
 
     private String formatWithSpaces(String digitsOnly) {
         StringBuilder formatted = new StringBuilder();
-        if (activeFieldType == 0) {
-            for (int i = 0; i < digitsOnly.length(); i++) {
-                if (i > 0 && i % 4 == 0) formatted.append(" ");
-                formatted.append(digitsOnly.charAt(i));
-            }
-        } else if (activeFieldType == 1) {
-            for (int i = 0; i < digitsOnly.length(); i++) {
-                if (i == 2) formatted.append("/");
-                formatted.append(digitsOnly.charAt(i));
-            }
-        } else {
-            formatted.append(digitsOnly);
-        }
+        // Format based on field type (credit, expiry, or CVV)
         return formatted.toString();
     }
 
